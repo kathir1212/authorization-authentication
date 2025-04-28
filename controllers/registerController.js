@@ -93,17 +93,28 @@ exports.deleteUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
     try {
         const userlogin = await registerModel.findOne({ email: req.body.email });
-
+        console.log(userlogin,"userlogin1");
+        
         if (!userlogin) {
+            console.log(userlogin,"userlogin2");
+
             return res.status(400).json({ message: "Invalid credentials" });
+
         }
 
         const isValid = bcrypt.compareSync(req.body.password, userlogin.password);
+        console.log(isValid,"isValid3");
+
         if (!isValid) {
+            console.log(isValid,"isValid4");
+
             return res.status(400).json({ message: "Invalid credentials" });
+
         }
 
         const token = jwt.sign({ id: userlogin._id }, process.env.Jwt_SECRET);
+        console.log(token,"token>>>>");
+        
         return res.json({ message: "Login successful", token });
     } catch (error) {
         console.error(error);
