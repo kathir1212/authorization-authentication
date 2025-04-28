@@ -111,8 +111,10 @@ exports.loginUser = async (req, res) => {
             return res.status(400).json({ message: "Invalid credentials" });
 
         }
+        console.log(process.env.Jwt_SECRET,"process.env.Jwt_SECRET");
 
         const token = jwt.sign({ id: userlogin._id }, process.env.Jwt_SECRET);
+
         console.log(token,"token>>>>");
         
         return res.json({ message: "Login successful", token });
